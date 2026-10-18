@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from sqlalchemy import Integer, String, Text, DateTime
+from sqlalchemy import DateTime, Integer, String, Text
 
 
 @pytest.mark.parametrize(
@@ -17,34 +17,39 @@ from sqlalchemy import Integer, String, Text, DateTime
     ),
 )
 def test_required_files_exist(project_root: Path, path: str):
-    assert (project_root / path).is_file(),  f"Убедитесь, что файл `{path}` существует."
+    assert (project_root / path).is_file(), f"Убедитесь, что файл `{path}` существует."
 
 
 def test_config_class():
     from settings import Config
 
-    assert Config is not None, (
-        "Убедитесь, что в файле `settings.py` описан класс `Config`."
-    )
+    assert (
+        Config is not None
+    ), "Убедитесь, что в файле `settings.py` описан класс `Config`."
     assert hasattr(Config, "SQLALCHEMY_DATABASE_URI"), (
-        "Убедитесь, что класс `Config` содержит атрибут "
-        "`SQLALCHEMY_DATABASE_URI`."
+        "Убедитесь, что класс `Config` содержит атрибут " "`SQLALCHEMY_DATABASE_URI`."
     )
     assert hasattr(Config, "SECRET_KEY"), (
-        "Убедитесь, что класс `Config` содержит атрибут "
-        "`SECRET_KEY`."
+        "Убедитесь, что класс `Config` содержит атрибут " "`SECRET_KEY`."
     )
 
 
 @pytest.mark.parametrize(
-    "path", ("opinions_app/static", "opinions_app/templates",)
+    "path",
+    (
+        "opinions_app/static",
+        "opinions_app/templates",
+    ),
 )
 def test_required_directories_exist(project_root: Path, path: str):
-    assert (project_root / path).is_dir(), f"Убедитесь, что директория `{path}` существует."
+    assert (
+        project_root / path
+    ).is_dir(), f"Убедитесь, что директория `{path}` существует."
 
 
 def test_opinion_model_exists():
     from opinions_app.models import Opinion
+
     assert Opinion is not None, "Убедитесь, что в `models.py` описан класс `Opinion`."
 
 
@@ -92,9 +97,15 @@ def test_views_exist():
         opinion_view,
     )
 
-    assert callable(index_view), "Убедитесь, что во `views.py` есть view-функция `index_view`."
-    assert callable(add_opinion_view), "Убедитесь, что во `views.py` есть view-функция `add_opinion_view`."
-    assert callable(opinion_view), "Убедитесь, что во `views.py` есть view-функция `opinion_view`."
+    assert callable(
+        index_view
+    ), "Убедитесь, что во `views.py` есть view-функция `index_view`."
+    assert callable(
+        add_opinion_view
+    ), "Убедитесь, что во `views.py` есть view-функция `add_opinion_view`."
+    assert callable(
+        opinion_view
+    ), "Убедитесь, что во `views.py` есть view-функция `opinion_view`."
 
 
 def test_error_handlers_registered():
@@ -114,6 +125,6 @@ def test_error_handlers_registered():
 def test_cli_command_registered():
     from opinions_app import app
 
-    assert "load_opinions" in app.cli.commands, (
-        "Убедитесь, что зарегистрирована CLI-команда `load_opinions`."
-    )
+    assert (
+        "load_opinions" in app.cli.commands
+    ), "Убедитесь, что зарегистрирована CLI-команда `load_opinions`."

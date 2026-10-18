@@ -1,12 +1,8 @@
-
 import os
 
 
-class Config(object):
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = (
-        os.getenv('DATABASE_URI')
-        or os.getenv('SQLALCHEMY_DATABASE_URI')
-
+class Config:
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI") or os.getenv(
+        "SQLALCHEMY_DATABASE_URI"
     )
-  
